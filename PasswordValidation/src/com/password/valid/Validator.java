@@ -1,15 +1,17 @@
-package jav.password.valid;
+package com.password.valid;
 
 import java.util.Scanner;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Validation {
+public class Validator {
+	private final static Logger LOGGER = Logger.getLogger(Validator.class.getName());
 	public static void main(String[] args) {
 		String inputPassword;
 		Scanner sc = new Scanner(System.in);
 		inputPassword = sc.next();
-		System.out.println(valPassword(inputPassword));
+		valPassword(inputPassword);
 	}
 
 	public static Boolean valPassword(String inputPassword) {
@@ -20,7 +22,7 @@ public class Validation {
 				return false;
 			}
 		} else {
-			System.out.println("Too small");
+			LOGGER.info("Too small");
 			return false;
 		}
 	}
@@ -45,6 +47,7 @@ public class Validation {
 				return true;
 			}
 		}
+		LOGGER.info("Password must have atleast one uppercase letter,one lowercase letter and one number");
 		return false;
 	}
 
@@ -53,11 +56,12 @@ public class Validation {
 		for (char currentChar : inputPassword.toCharArray()) {
 
 			if (Character.isWhitespace(currentChar)) {
-				return true;
+				LOGGER.info("Password does not contain white space");
+				return false;
 			}
 
 		}
-		return false;
+		return true;
 	}
 
 	// to check if password contains special characters
@@ -67,6 +71,7 @@ public class Validation {
 		if (!sMatcher.matches()) {
 			return true;
 		}
+		LOGGER.info("Password must contain atleast one special character");
 		return false;
 	}
 }
